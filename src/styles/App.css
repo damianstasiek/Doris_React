@@ -1,0 +1,31 @@
+.app-wrapper {
+  background-color: #3B3A38;
+  min-height: 100vh;
+  padding: 50px 100px;
+}
+.site-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-nav__list {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  font-size: 20px;
+}
+.site-nav__item {
+  padding: 0 30px;
+}
+.site-nav__link {
+  text-decoration: none;
+  /* color: #fff; */
+  color:wheat;
+}
+.site-nav__img {
+  width: 314px;
+}
+.section-wrapper {
+  padding: 50px 0;
+}

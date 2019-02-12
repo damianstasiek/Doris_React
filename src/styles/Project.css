@@ -1,0 +1,12 @@
+.project__title {
+    font-size: 60px;
+}
+.project__gallery {
+    display: flex;
+    padding: 80px 0;
+
+}
+.project__gallery img {
+    width: 70%;
+    height: auto;
+}
