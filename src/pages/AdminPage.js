@@ -7,17 +7,19 @@ class AdminPage extends Component {
     state = {
         images: [],
         title: '',
+        imgAlt: '',
         description: '',
         gallery: [],
         progress: 0
     }
     fileInput = React.createRef();
-    imgAlias = React.createRef();
+    // imgAlias = React.createRef();
 
     componentDidUpdate() {
         if (this.state.images) {
             this.handleAddGallery();
         }
+
     }
 
     handleChange = (e) => {
@@ -27,12 +29,21 @@ class AdminPage extends Component {
             [name]: value
         })
     }
+    handleSubmitGallery = (event) => {
+        event.preventDefault();
+        const images = {
+            adres: this.fileInput.current.files[0],
+        }
+        this.setState({ images: [...this.state.images, images] })
+        console.log(images)
+    }
+
 
     handleAddGallery = () => {
-        const { images } = this.state
+        const { images, imgAlt } = this.state
         const gallery = {}
         images.forEach((image) => {
-            const uploadTask = firebase.storage().ref(`images/${image.adres.name}`).put(image.adres);
+            const uploadTask = firebase.storage().ref(`images/${imgAlt}/${image.adres.name}`).put(image.adres);
             uploadTask.on('state_changed',
                 (snapshot) => {
                     const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
@@ -42,27 +53,17 @@ class AdminPage extends Component {
                     console.log(error);
                 },
                 () => {
-                    firebase.storage().ref(`images`).child(image.adres.name).getDownloadURL().then(url => {
+                    firebase.storage().ref(`images/${imgAlt}`).child(image.adres.name).getDownloadURL().then(url => {
                         console.log(url);
                         gallery.image = url;
-                        gallery.title = image.alias
+                        gallery.imgAlt = this.state.imgAlt
                         this.setState({ gallery: [...this.state.gallery, gallery] })
                     })
                 });
             this.setState({
                 images: [],
-                progress: 0
             })
         })
-    }
-    handleSubmitGallery = (event) => {
-        event.preventDefault();
-        const images = {
-            adres: this.fileInput.current.files[0],
-            alias: this.imgAlias.current.value
-        }
-        this.setState({ images: [...this.state.images, images] })
-        console.log(images)
     }
 
     addProject = () => {
@@ -76,20 +77,20 @@ class AdminPage extends Component {
                 image: [],
                 title: '',
                 description: '',
-                gallery: []
+                gallery: [],
+                imgAlt: ''
             });
-            console.log("dodałem")
             // this.props.history.push("/")
-        })
-            .catch((error) => {
-                console.error("Error adding doucment: ", error)
-            });
+        }).catch((error) => {
+            console.error("Error adding doucment: ", error)
+        });
+        alert('Projekt dodany')
     }
 
     render() {
         console.log(this.state.images)
         console.log(this.state.gallery)
-        const addImages = this.state.gallery.map(img => <div key={img.title} className="project__gallery"><img src={img.image} className="img-responsive" alt={img.title} /> </div>
+        const addImages = this.state.gallery.map(img => <div key={img.imgAlt} className="project__gallery"><img src={img.image} className="img-responsive" alt={img.title} /> </div>
         )
         return (
             <div className="container" >
@@ -109,14 +110,13 @@ class AdminPage extends Component {
                             <textarea name="description" id="description" cols="30" rows="10" onChange={this.handleChange} placeholder="Opis projektu"></textarea>
                         </div>
                     </div>
-                    <button>Dodaj</button>
                 </form>
                 <form className="form-row" onSubmit={this.handleSubmitGallery}>
                     <div className="form-label">
                         <label htmlFor="imgTitle">Tytuł obrazka</label>
                     </div>
                     <div className="form-field">
-                        <input type="text" id="imgTitle" name="imgTitle" ref={this.imgAlias} placeholder="Opis obrazka" />
+                        <input type="text" id="imgAlt" name="imgAlt" value={this.state.imgAlt} onChange={this.handleChange} placeholder="Opis obrazka" />
                     </div>
                     <div className="form-label">
                         <label htmlFor="image">Zdjęcia</label>
@@ -127,7 +127,6 @@ class AdminPage extends Component {
                     <progress value={this.state.progress} max="100" />
                     <button type="sumbit">Dodaj foto</button>
                 </form>
-                <button onClick={this.handleAddGallery}>Dodaj projekt</button>
                 <button onClick={this.addProject}>Dodaj ostatecznie projekt</button>
 
                 {addImages}
