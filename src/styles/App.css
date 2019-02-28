@@ -1,12 +1,14 @@
 .app-wrapper {
-  background-color: #3B3A38;
+  /* background-color: #3B3A38; */
   min-height: 100vh;
   padding: 50px 100px;
 }
+
 .site-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color:red
 }
 
 .site-nav__list {
@@ -21,7 +23,7 @@
 .site-nav__link {
   text-decoration: none;
   /* color: #fff; */
-  color:wheat;
+  color:orange;
 }
 .site-nav__img {
   width: 314px;

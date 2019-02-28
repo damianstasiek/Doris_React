@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.form-container, .form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+.form-row {
+  display: flex;
+  padding: 18px;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+.form-row input, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 20px;
+}
+
+.form-label {
+  flex-basis: 25%;
+  width: 25%;
+}
+.form-field {
+  width: 60%;
+}
+.form-add {
+  width: 10%;
+}
+
+.form-add-button {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  background-color: #28a745;
+  color: white;
+  font-size: 30px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.form-add-button:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}

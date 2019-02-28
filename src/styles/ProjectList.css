@@ -1,0 +1,16 @@
+.project-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: #222;
+    width: 100%;
+}
+
+.project {
+    width: 30%;
+    padding: 80px 0;
+}
+.project img {
+    width: 100%;
+}

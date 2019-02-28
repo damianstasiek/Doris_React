@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import About from './About';
-import ProjectsList from './PorjectsList';
-import Contact from './Contact';
+import { BrowserRouter as Router } from 'react-router-dom'
+import Page from './Page.js'
 import '../styles/App.css';
 import Header from '../layouts/Header'
 
 
 class App extends Component {
+  previousLocation = this.props.location
   render() {
     return (
       <Router>
         <div className="app-wrapper">
-          <header className="header">
-            {<Header />}
-          </header>
+          {<Header />}
           <section className="section-wrapper">
-            <Switch>
-              <Route path="/about" component={About} />
-              <Route path="/projects" component={ProjectsList} />
-              <Route path="/contact" component={Contact} />
-            </Switch>
+            {<Page />}
           </section>
         </div>
       </Router>

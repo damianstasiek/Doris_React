@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import logo from '../img/dorisLogo.png'
 
 const list = [
@@ -14,10 +14,16 @@ const list = [
     {
         name: 'Kontakt',
         path: '/contact'
+    },
+    {
+        name: 'Admin',
+        path: '/admin'
     }
 ]
 
-const Header = () => {
+const Header = (props) => {
+    // const adres = props.location.pathname;
+    console.log(props.location.pathname)
     const menu = list.map(item => (
         <li key={item.name} className="site-nav__item">
             <NavLink className="site-nav__link" to={item.path}>{item.name}</NavLink>
@@ -26,13 +32,15 @@ const Header = () => {
     ))
 
     return (
-        <nav className="site-nav">
-            <NavLink className="site-nav__link" to="/"><img className="site-nav__img" src={logo} alt="Doris projektowanie wnęrtrz" /></NavLink>
-            <ul className="site-nav__list">
-                {menu}
-            </ul>
-        </nav>
+        <>
+            <nav className="site-nav">
+                <NavLink className="site-nav__link" to="/"><img className="site-nav__img" src={logo} alt="Doris projektowanie wnęrtrz" /></NavLink>
+                <ul className="site-nav__list">
+                    {menu}
+                </ul>
+            </nav>
+        </>
     );
 }
 
-export default Header;
+export default withRouter(Header);
