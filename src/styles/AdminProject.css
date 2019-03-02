@@ -1,0 +1,52 @@
+.project__list {
+    display: flex;
+    flex-direction: column;
+}
+.project__item {
+    text-align: center;
+    padding: 18px;
+    border: 2px solid #acacac;
+    border-radius: 4px;
+    margin: 8px 0;
+    /* background-color: #333; */
+}
+.project__btn {
+    margin: 8px 0;
+    border-radius: 8px;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.project__btn--add {
+    background-color: #4CAF50;
+}
+
+.project__dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+.project__dropdown__content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.project__dropdown__content a {
+    font-size: 18px;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+.project__dropdown:hover .project__dropdown__content {
+      display: block;
+  }
+.project__dropdown__content a:hover {background-color: #f1f1f1}

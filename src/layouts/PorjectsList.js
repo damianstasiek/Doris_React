@@ -22,7 +22,6 @@ class ProjectsList extends Component {
                 projects
             })
         })
-
     }
 
 

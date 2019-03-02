@@ -1,0 +1,96 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.form-container, .form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+.form-row {
+  display: flex;
+  padding: 18px;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.form-row--column {
+  flex-direction: column;
+}
+.form-row input, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 20px;
+}
+.form-label {
+  flex-basis: 25%;
+  width: 25%;
+  padding: 25px;
+  flex-grow: 1;
+}
+.form-field {
+  width: 60%;
+  flex-grow: 1;
+}
+.form-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.form-btn--big {
+  width: 100%
+}
+.form-add {
+  width: 10%;
+}
+
+.form-btn:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+.form__gallery {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  flex-wrap: wrap;
+}
+.form__gallery__img {
+  text-align: center;
+  width: 23%;
+}
+.form__gallery__img img {
+  width: 100%;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value {
+  background-image:
+	   -webkit-linear-gradient(-45deg, 
+	                           transparent 33%, rgba(0, 0, 0, .1) 33%, 
+	                           rgba(0,0, 0, .1) 66%, transparent 66%),
+	   -webkit-linear-gradient(top, 
+	                           rgba(255, 255, 255, .25), 
+	                           rgba(0, 0, 0, .25)),
+	   -webkit-linear-gradient(left, #09c, #f44);
+
+    border-radius: 2px; 
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+}
