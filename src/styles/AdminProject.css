@@ -10,6 +10,9 @@
     margin: 8px 0;
     /* background-color: #333; */
 }
+.project__item__header {
+    padding: 18px 0 ;
+}
 .project__btn {
     margin: 8px 0;
     border-radius: 8px;

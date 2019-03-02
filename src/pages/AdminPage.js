@@ -12,7 +12,7 @@ class AdminPage extends Component {
     render() {
         return (
             <>
-                <Link to="/admin/nowy">
+                <Link to="/admin/nowy" >
                     <button className="project__btn project__btn--add">Dodaj projekt </button>
                 </Link>
                 <hr />

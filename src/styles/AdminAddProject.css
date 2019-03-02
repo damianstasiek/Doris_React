@@ -39,7 +39,7 @@
   width: 60%;
   flex-grow: 1;
 }
-.form-btn {
+.form__btn {
   background-color: #4CAF50;
   color: white;
   padding: 14px 20px;
@@ -49,8 +49,13 @@
   font-size: 20px;
   cursor: pointer;
 }
-.form-btn--big {
+.form__btn--big {
   width: 100%
+}
+.form__btn--delete {
+  background-color: red;
+  font-size: 16px;
+  padding: 10px 16px;
 }
 .form-add {
   width: 10%;

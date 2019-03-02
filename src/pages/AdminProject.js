@@ -6,8 +6,8 @@ const AdminProject = (props) => {
     console.log(props.projects)
     const projectItem = props.projects.map((project) => (
         <div key={project.id} className="project__item">
-            <h3>{project.title}</h3>
-            <p>{project.description}</p>
+            <h3 className="project__item__header">{project.title}</h3>
+            {/* <p>{project.description}</p> */}
             <img src={project.gallery[0].image} alt="" />
             <div className="project__dropdown">
                 <button className="project__btn">Zarządzaj projektem</button>

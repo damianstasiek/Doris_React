@@ -63,6 +63,12 @@ class AdminAddProjects extends Component {
             })
         })
     }
+    handleDelteImg = (id) => {
+        let gallery = this.state.gallery.slice();
+        gallery = gallery.filter(img => id !== img.image)
+        this.setState({ gallery })
+        console.log(gallery)
+    }
 
     addProject = () => {
         const { title, description, gallery } = this.state;
@@ -92,6 +98,7 @@ class AdminAddProjects extends Component {
             <div key={img.imgAlt} className="form__gallery__img">
                 <h4>{img.imgAlt}</h4>
                 <img src={img.image} className="img-responsive" alt={img.title} />
+                <button className="form__btn form__btn--delete" onClick={() => this.handleDelteImg(img.image)}>Usuń</button>
             </div>
         )
         return (
@@ -131,13 +138,13 @@ class AdminAddProjects extends Component {
                     </div>
                     <div className="form-row form-row--column">
                         <progress value={this.state.progress} max="100" />
-                        <button className="form-btn" type="sumbit">Dodaj zdjęcie</button>
+                        <button className="form__btn" type="sumbit">Dodaj zdjęcie</button>
                     </div>
                 </form>
                 <div className="form__gallery">
                     {addImages}
                 </div>
-                <button className="form-btn form-btn--big" onClick={this.addProject}>Dodaj projekt</button>
+                <button className="form__btn form__btn--big" onClick={this.addProject}>Dodaj projekt</button>
 
             </div >
         );
