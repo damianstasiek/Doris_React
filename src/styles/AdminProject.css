@@ -1,14 +1,16 @@
 .project__list {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .project__item {
+    width: 45%;
     text-align: center;
     padding: 18px;
-    border: 2px solid #acacac;
+    margin: 12px;
     border-radius: 4px;
     margin: 8px 0;
-    /* background-color: #333; */
+    background-color: #fff;
 }
 .project__item__header {
     padding: 18px 0 ;

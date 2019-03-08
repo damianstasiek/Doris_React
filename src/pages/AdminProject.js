@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import '../styles/AdminProject.css'
 
+
 const AdminProject = (props) => {
-    console.log(props.projects)
+    const anchorRef = React.createRef()
     const projectItem = props.projects.map((project) => (
         <div key={project.id} className="project__item">
             <h3 className="project__item__header">{project.title}</h3>
@@ -12,9 +13,9 @@ const AdminProject = (props) => {
             <div className="project__dropdown">
                 <button className="project__btn">Zarządzaj projektem</button>
                 <div className="project__dropdown__content">
-                    <Link to="admin/edit">Edytuj</Link>
+                    <Link to={`/admin/edit/${project.id}`}>Edytuj</Link>
                     <li onClick={() => props.remove(project.id)}> Usuń</li>
-                    <a href="#">Wyłącz</a>
+                    {/* <a href="#">Wyłącz</a> */}
                 </div>
             </div>
 
