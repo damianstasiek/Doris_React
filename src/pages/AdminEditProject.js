@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as firebase from 'firebase'
+
 class AdminEditProject extends Component {
     state = {
         project: '',
         images: [],
         imgAlt: '',
-        gallery: []
+        gallery: [],
+        progress: 0
     }
     previousLocation = this.props.location;
     refProjects = firebase.firestore().collection('projects')
@@ -14,28 +16,19 @@ class AdminEditProject extends Component {
     componentDidMount() {
         const id = this.props.match.params.id
         const project = this.props.extra.projects.filter(item => id === item.id)
-        console.log(project)
         this.setState({
             project: project[0],
             gallery: [...project[0].gallery]
         })
-        console.log(this.state.gallery)
     }
     componentDidUpdate() {
         if (this.state.images) {
-            console.log('gallery')
             this.handleAddGallery();
         }
-    }
-    componentWillMount() {
-        console.log('juz')
     }
     handleChangeInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        const project = { ...this.state.project };
-        console.log(project)
-        project.title = e.target.value;
         this.setState(prevState => ({
             project: {
                 ...prevState.project,
@@ -44,19 +37,16 @@ class AdminEditProject extends Component {
         }))
     }
     handleSubmitGallery = (event) => {
-        console.log('już')
         event.preventDefault();
         const images = {
             adres: this.fileInput.current.files[0],
         }
         this.setState({ images: [...this.state.images, images] })
-        console.log(images)
     }
     handleUpdate = (e) => {
         e.preventDefault()
         const id = this.props.match.params.id
-        console.log(id)
-        const update = this.refProjects.doc(id).update({
+        this.refProjects.doc(id).update({
             title: this.state.project.title,
             description: this.state.project.description,
             gallery: this.state.gallery
@@ -64,11 +54,7 @@ class AdminEditProject extends Component {
     }
     handleAddGallery = () => {
         const { images } = this.state
-        console.log(images)
-        // const { gallery } = this.state.project.gallery
         const gallery = {}
-        console.log(this.state.project.gallery)
-        const img = {}
         images.forEach((image) => {
             const uploadTask = firebase.storage().ref(`images/${image.adres.name}`).put(image.adres);
             uploadTask.on('state_changed',
@@ -84,10 +70,7 @@ class AdminEditProject extends Component {
                         console.log(url)
                         gallery.image = url;
                         gallery.imgAlt = this.state.imgAlt
-                        console.log(gallery)
                         this.setState({ gallery: [...this.state.gallery, gallery] })
-                        console.log(gallery)
-                        console.log(this.state.project)
                     })
                 });
             this.setState({
@@ -102,6 +85,12 @@ class AdminEditProject extends Component {
             [name]: value
         })
     }
+    handleDelteImg = (id) => {
+        let gallery = this.state.gallery.slice();
+        gallery = gallery.filter(img => id !== img.image)
+        this.setState({ gallery })
+        console.log(gallery)
+    }
 
     render() {
         const bgWhite = {
@@ -111,29 +100,20 @@ class AdminEditProject extends Component {
             backgroundColor: 'transparent'
         }
         const { project } = this.state
-        console.log(project)
-        console.log(this.state.gallery)
-        // console.log(project.gallery)
         let imgGallery = [];
-        if (project) {
-            imgGallery = this.state.gallery.map(img =>
-                <div key={img.imgAlt} className="form__gallery__img">
-                    <h4>{img.imgAlt}</h4>
-                    <img src={img.image} className="img-responsive" alt={img.title} />
-                    <button className="form__btn form__btn--delete">Usuń</button>
-                </div>
-            )
-        }
+        imgGallery = this.state.gallery.map(img =>
+            <div key={img.image.name} className="form__gallery__img">
+                <h4 className="form__gallery__header">{img.imgAlt}</h4>
+                <img src={img.image} className="img-responsive" alt={img.title} />
+                <button className="form__btn form__btn--delete" onClick={() => this.handleDelteImg(img.image)}>Usuń</button>
+            </div>
+        )
         if (project) {
             return (
                 <>
                     <Link to="/admin/projects">
                         <button className="form__btn form__btn--delete"><i className="fas fa-arrow-left menu__icon" ></i>Powrót</button>
                     </Link>
-                    <form onSubmit={this.handleUpdate}>
-                        <input type="text" value={project.title} onChange={this.handleChangeInput} />
-                        <button type="sumbit">Update</button>
-                    </form>
                     <div className="container" >
                         <form className="form-container">
                             <div className="form-group">
@@ -171,8 +151,7 @@ class AdminEditProject extends Component {
                         <div className="form__gallery" style={this.state.project.gallery.length > 0 ? bgWhite : transparent}>
                             {imgGallery}
                         </div>
-                        <button className="form__btn form__btn--big" onClick={this.handleUpdate}>Dodaj projekt</button>
-                        <Link to="/admin">Powrót</Link>
+                        <button className="form__btn form__btn--big" onClick={this.handleUpdate}>Uaktualnij projekt</button>
                     </div >
                 </>
             );

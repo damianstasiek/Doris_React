@@ -10,12 +10,14 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="app-wrapper">
+        <>
+          {/* <div className="app-wrapper"> */}
           {<Header />}
-          <section className="section-wrapper">
-            {<Page />}
-          </section>
-        </div>
+          {/* <section className="section-wrapper"> */}
+          {<Page />}
+          {/* </section> */}
+          {/* </div> */}
+        </>
       </Router>
     );
   }

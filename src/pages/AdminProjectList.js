@@ -1,5 +1,5 @@
 import React from 'react';
-import AdminProject from './AdminProject'
+import AdminProject from '../components/AdminProject'
 
 const AdminProjectList = (props) => {
     const { projects } = props.data;

@@ -72,10 +72,13 @@ class AdminAddProjects extends Component {
 
     addProject = () => {
         const { title, description, gallery } = this.state;
+        let newRef = this.refProjects.doc.id;
+        console.log(newRef);
         this.refProjects.add({
             title,
             description,
             gallery
+
         }).then(() => {
             const projects = [];
             this.refProjects.get().then((snapshot) => {
@@ -87,6 +90,7 @@ class AdminAddProjects extends Component {
                 this.setState({ projects })
                 this.props.add(projects);
             })
+            this.refProjects.update({ projects })
         }).then((docRef) => {
             this.setState({
                 image: [],
@@ -111,6 +115,7 @@ class AdminAddProjects extends Component {
         // console.log(this.props.extra.projects)
         console.log(this.match.url)
         console.log(this.props)
+        console.log(this.state.projects)
         // console.log(this.state.images)
         // console.log(this.state.gallery)
         const { url } = this.match

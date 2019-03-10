@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom'
-import logo from '../img/dorisLogo.png'
+import { Route, NavLink, withRouter } from 'react-router-dom'
+import HeaderPage from '../components/HeaderPage';
 
 const list = [
     {
@@ -22,23 +22,19 @@ const list = [
 ]
 
 const Header = (props) => {
+    console.log(list)
     // const adres = props.location.pathname;
     console.log(props.location.pathname)
-    const menu = list.map(item => (
-        <li key={item.name} className="site-nav__item">
-            <NavLink className="site-nav__link" to={item.path}>{item.name}</NavLink>
-        </li>
-
-    ))
-
+    console.log(props)
     return (
         <>
-            <nav className="site-nav">
-                <NavLink className="site-nav__link" to="/"><img className="site-nav__img" src={logo} alt="Doris projektowanie wnęrtrz" /></NavLink>
-                <ul className="site-nav__list">
-                    {menu}
-                </ul>
-            </nav>
+            <Route path="/" exact render={props => <HeaderPage {...props} menu={list} class="header" />} />
+            <Route path="/contact" render={props => <HeaderPage {...props} menu={list} class="header" />} />
+            <Route path="/projects" render={props => <HeaderPage {...props} menu={list} class="header" />} />
+            <Route path="/about" render={props => <HeaderPage {...props} menu={list} class="header" />} />
+            <Route path="/project/:id" render={props => <HeaderPage {...props} menu={list} class="header__projects" />} />
+
+
         </>
     );
 }

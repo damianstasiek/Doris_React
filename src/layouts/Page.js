@@ -1,28 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
 
-import HomePage from '../components/HomePage'
+import HomePage from '../pages/HomePage'
 import About from './About';
-import ProjectsList from './PorjectsList';
+import ProjectsList from '../pages/PorjectsList';
 import Contact from './Contact';
-import ErrorPage from '../components/ErrorPage'
-import ProjectItem from '../components/ProjectItem';
-import AdminPage from '../pages/AdminPage';
+import ErrorPage from '../pages/ErrorPage'
+import Project from '../components/Project'
+import AdminPage from '../layouts/AdminPage';
+import * as firebase from 'firebase'
 
-const Page = () => {
-    return (
-        <>
-            <Switch>
-                <Route path="/" exact component={HomePage} />
-                <Route path="/about" component={About} />
-                <Route path="/projects" component={ProjectsList} />
-                <Route path="/project/:id" component={ProjectItem} />
-                <Route path="/contact" component={Contact} />
-                <Route path="/admin" component={AdminPage} />
-                <Route component={ErrorPage} />
-            </Switch>
-        </>
-    );
+class Page extends Component {
+    state = {
+        projects: []
+    }
+    componentDidMount() {
+        const projects = [];
+        var firestore = firebase.firestore();
+        const rootRef = firestore.collection('projects')
+        rootRef.get().then((snapshot) => {
+            snapshot.docs.forEach(doc => {
+                const item = doc.data()
+                item.id = doc.id
+                projects.push(item)
+            });
+            this.setState({
+                projects
+            })
+        })
+    }
+
+    render() {
+        console.log(this.state.projects)
+        return (
+            <>
+                <Switch>
+                    <Route path="/" exact component={HomePage} />
+                    <Route path="/about" component={About} />
+                    <Route path="/projects" render={props => <ProjectsList {...props} data={this.state} />} />
+                    <Route path="/project/:id" exact render={props => <Project {...props} data={this.state} />} />
+                    <Route path="/contact" component={Contact} />
+                    <Route path="/admin" component={AdminPage} />
+                    <Route component={ErrorPage} />
+                </Switch>
+            </>
+        );
+    }
 }
 
 export default Page;
+
+

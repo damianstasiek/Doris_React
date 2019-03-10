@@ -3,10 +3,19 @@
   min-height: 100vh;
   padding: 50px 100px;
 }
+.header {
+  background-color: #333;
+  padding: 0 80px;
+}
+.header__projects {
+  min-height: 100vh;
+  padding: 0 80px;
+}
 
 .site-nav {
   display: flex;
   justify-content: space-between;
+  padding: 40px 0;
   align-items: center;
   color:red
 }
@@ -30,4 +39,9 @@
 }
 .section-wrapper {
   padding: 50px 0;
+}
+
+.homePage { 
+  background-color: #333;
+  min-height: 100vh;
 }
