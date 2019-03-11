@@ -9,6 +9,7 @@ class AdminAddProjects extends Component {
         images: [],
         title: '',
         imgAlt: '',
+        headerImage: false,
         description: '',
         gallery: [],
         progress: 0
@@ -25,7 +26,10 @@ class AdminAddProjects extends Component {
 
     handleChange = (e) => {
         const name = e.target.name;
-        const value = e.target.value;
+        let value = e.target.value;
+        if (name === 'headerImage') {
+            value = e.target.checked;
+        }
         this.setState({
             [name]: value
         })
@@ -34,14 +38,18 @@ class AdminAddProjects extends Component {
         event.preventDefault();
         const images = {
             adres: this.fileInput.current.files[0],
+            headerImage: this.state.headerImage
         }
-        this.setState({ images: [...this.state.images, images] })
-        console.log(images)
+        this.setState({
+            images: [...this.state.images, images],
+            headerImage: false
+        })
     }
 
     handleAddGallery = () => {
         const { images, title } = this.state
         const gallery = {}
+        console.log(images)
         images.forEach((image) => {
             const uploadTask = firebase.storage().ref(`images/${title}/${image.adres.name}`).put(image.adres);
             uploadTask.on('state_changed',
@@ -56,6 +64,7 @@ class AdminAddProjects extends Component {
                     firebase.storage().ref(`images/${title}`).child(image.adres.name).getDownloadURL().then(url => {
                         gallery.image = url;
                         gallery.imgAlt = this.state.imgAlt
+                        gallery.headerImage = image.headerImage
                         this.setState({ gallery: [...this.state.gallery, gallery] })
                     })
                 });
@@ -63,6 +72,7 @@ class AdminAddProjects extends Component {
                 images: [],
             })
         })
+
     }
     handleDelteImg = (id) => {
         let gallery = this.state.gallery.slice();
@@ -117,7 +127,8 @@ class AdminAddProjects extends Component {
         console.log(this.props)
         console.log(this.state.projects)
         // console.log(this.state.images)
-        // console.log(this.state.gallery)
+        const checkbocDisplay = this.state.gallery.filter(item => item.headerImage === true)
+        console.log(this.state.gallery)
         const { url } = this.match
         const imgGallery = this.state.gallery.map(img =>
             <div key={img.imgAlt} className="form__gallery__img">
@@ -158,7 +169,12 @@ class AdminAddProjects extends Component {
                             <input type="file" name="image" id="image" accept="image/*" ref={this.fileInput} />
                         </div>
                     </div>
-                    <div className="form-group form-group--column">
+                    {checkbocDisplay.length > 0 ? '' : <div className="form-group form-group--checkbox">
+                        <label htmlFor="headerImage" className="checkbox-label">Czy zdjęcie główne?</label>
+                        <input type="checkbox" value={this.headerImage} onChange={this.handleChange} name="headerImage" id="headerImage" />
+                    </div>}
+
+                    <div className="form-group form-group--row">
                         <button className="form__btn" type="sumbit">Dodaj zdjęcie</button>
                         <progress value={this.state.progress} max="100" />
                     </div>

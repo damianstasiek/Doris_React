@@ -9,19 +9,7 @@ import * as firebase from 'firebase'
 
 class AdminPage extends Component {
     state = {
-        projects: [
-            {
-                title: '',
-                description: '',
-                gallery: [
-                    {
-                        image: '',
-                        imgAlt: ''
-                    }
-
-                ]
-            }
-        ]
+        projects: []
     }
     refProjects = firebase.firestore().collection('projects')
     componentDidMount() {
@@ -73,7 +61,7 @@ class AdminPage extends Component {
                         <Switch>
                             <Route path="/admin/projects" render={props => <AdminProjectList {...props} data={this.state} remove={this.handleRemove} />} />
                             <Route path="/admin/nowy" render={data => <AdminAddProjects {...data} add={this.handleAdd} />} />
-                            <Route path="/admin/edit/:id" exact render={data => <AdminEditProject {...data} extra={this.state} />} />
+                            <Route path="/admin/edit/:id" component={AdminEditProject} />
                         </Switch>
                     </div>
                 </div>

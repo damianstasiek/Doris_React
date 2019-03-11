@@ -8,3 +8,6 @@ html {
   font-size: 20px;
   background-color: #fff;
 }
+body {
+  overflow: hidden;
+}

@@ -9,7 +9,7 @@ class HeaderPage extends Component {
     }
 
     refProjects = firebase.firestore().collection('projects')
-
+    out = false;
     componentDidMount() {
         if (this.props.class === 'header__projects') {
             const id = this.props.match.params.id
@@ -17,11 +17,26 @@ class HeaderPage extends Component {
             this.refProjects.doc(id).get()
                 .then(snapshot => {
                     const project = snapshot.data();
-                    const image = project.gallery.filter(item => item.header === true).map(item => item.image)
+                    const image = project.gallery.filter(item => item.headerImage === true).map(item => item.image)
                     this.setState({ image })
                 })
         }
 
+    }
+    toggleMenu = (e) => {
+        console.log(e.target.parentElement.classList)
+        const mainNav = document.querySelector('.main-nav');
+        const navItem = document.querySelectorAll('.nav__item')
+        if (this.out) {
+            navItem.forEach(item => item.classList.remove('active'))
+            setTimeout(() => { mainNav.classList.remove('active') }, 500)
+            this.out = false;
+        } else {
+            mainNav.classList.add('active');
+            setTimeout(() => { navItem.forEach(item => item.classList.add('active')) }, 1000)
+            this.out = true
+        }
+        console.log('działa')
     }
 
     render() {
@@ -30,25 +45,34 @@ class HeaderPage extends Component {
             background: `url(${image}) no-repeat center center fixed`,
             backgroundSize: 'cover',
         }
+        const none = {}
+        const projectId = this.props.match.params.id
         console.log(this.state)
         console.log(this.state.image)
         console.log(this.props)
         console.log(this.props.menu)
         console.log(this.props.match.params.id)
         const menu = this.props.menu.map(item => (
-            <li key={item.name} className="site-nav__item">
-                <NavLink className="site-nav__link" to={item.path}>{item.name}</NavLink>
+            <li key={item.name} className="nav__item">
+                <NavLink className="nav__links" to={item.path}>{item.name}</NavLink>
             </li>
         ))
         return (
-            <div className={this.props.class} style={bgImage}>
-                <nav className="site-nav">
-                    <NavLink className="site-nav__link" to="/"><img className="site-nav__img" src={logo} alt="Doris projektowanie wnęrtrz" /></NavLink>
-                    <ul className="site-nav__list">
+            <header className={this.props.class} style={projectId ? bgImage : none}>
+
+                <nav className="navbar">
+                    <div className="nav-toggle" onClick={this.toggleMenu}>
+                        <NavLink className="nav__link" to="/"><img src={logo} alt="Doris projektowanie wnęrtrz" /></NavLink>
+                        <i className="fas fa-bars"></i>
+
+                    </div>
+                    <ul className="main-nav">
                         {menu}
                     </ul>
                 </nav>
-            </div>
+
+            </header>
+
         );
     }
 }

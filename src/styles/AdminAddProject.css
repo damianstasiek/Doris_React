@@ -22,9 +22,17 @@
   width: 100%;
   flex-wrap: wrap;
 }
-.form-group--column {
+.form-group--row {
   flex-direction: row;
   align-items: center;
+}
+.form-group--checkbox {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.checkbox-label {
+  padding-right: 8px;
 }
 
 .form-field {

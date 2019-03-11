@@ -4,22 +4,31 @@ import * as firebase from 'firebase'
 
 class AdminEditProject extends Component {
     state = {
-        project: '',
+        title: '',
+        description: '',
         images: [],
         imgAlt: '',
+        headerImage: false,
         gallery: [],
         progress: 0
     }
     previousLocation = this.props.location;
     refProjects = firebase.firestore().collection('projects')
     fileInput = React.createRef();
+
     componentDidMount() {
         const id = this.props.match.params.id
-        const project = this.props.extra.projects.filter(item => id === item.id)
-        this.setState({
-            project: project[0],
-            gallery: [...project[0].gallery]
-        })
+        const projects = this.refProjects.doc(id).get()
+            .then(snapshot => {
+                const project = snapshot.data();
+                console.log(project)
+                this.setState({
+                    title: project.title,
+                    description: project.description,
+                    gallery: project.gallery,
+                })
+            })
+        console.log(projects)
     }
     componentDidUpdate() {
         if (this.state.images) {
@@ -28,7 +37,10 @@ class AdminEditProject extends Component {
     }
     handleChangeInput = (e) => {
         const name = e.target.name;
-        const value = e.target.value;
+        let value = e.target.value;
+        if (name === 'headerImage') {
+            value = e.target.checked;
+        }
         this.setState(prevState => ({
             project: {
                 ...prevState.project,
@@ -40,15 +52,19 @@ class AdminEditProject extends Component {
         event.preventDefault();
         const images = {
             adres: this.fileInput.current.files[0],
+            headerImage: this.state.headerImage
         }
-        this.setState({ images: [...this.state.images, images] })
+        this.setState({
+            images: [...this.state.images, images],
+            headerImage: false
+        })
     }
     handleUpdate = (e) => {
         e.preventDefault()
         const id = this.props.match.params.id
         this.refProjects.doc(id).update({
-            title: this.state.project.title,
-            description: this.state.project.description,
+            title: this.state.title,
+            description: this.state.description,
             gallery: this.state.gallery
         })
     }
@@ -70,6 +86,7 @@ class AdminEditProject extends Component {
                         console.log(url)
                         gallery.image = url;
                         gallery.imgAlt = this.state.imgAlt
+                        gallery.headerImage = image.headerImage
                         this.setState({ gallery: [...this.state.gallery, gallery] })
                     })
                 });
@@ -80,7 +97,10 @@ class AdminEditProject extends Component {
     }
     handleChange = (e) => {
         const name = e.target.name;
-        const value = e.target.value;
+        let value = e.target.value;
+        if (name === 'headerImage') {
+            value = e.target.checked;
+        }
         this.setState({
             [name]: value
         })
@@ -93,22 +113,26 @@ class AdminEditProject extends Component {
     }
 
     render() {
+        console.log(this.props)
+        console.log(this.state)
         const bgWhite = {
             backgroundColor: '#fff'
         }
         const transparent = {
             backgroundColor: 'transparent'
         }
-        const { project } = this.state
+        const { title, description, imgAlt, headerImage, progress, gallery } = this.state
+        const checkbocDisplay = this.state.gallery.filter(item => item.headerImage === true)
         let imgGallery = [];
         imgGallery = this.state.gallery.map(img =>
-            <div key={img.image.name} className="form__gallery__img">
+            <div key={img.image} className="form__gallery__img">
                 <h4 className="form__gallery__header">{img.imgAlt}</h4>
+                {img.headerImage ? <p>Zdjęcie główne</p> : ''}
                 <img src={img.image} className="img-responsive" alt={img.title} />
                 <button className="form__btn form__btn--delete" onClick={() => this.handleDelteImg(img.image)}>Usuń</button>
             </div>
         )
-        if (project) {
+        if (this.state.title) {
             return (
                 <>
                     <Link to="/admin/projects">
@@ -119,13 +143,13 @@ class AdminEditProject extends Component {
                             <div className="form-group">
                                 <label htmlFor="title">Tytuł projektu</label>
                                 <div className="form-field">
-                                    <input type="text" id="title" name="title" value={project.title} onChange={this.handleChangeInput} placeholder="Tytuł projektu" />
+                                    <input type="text" id="title" name="title" value={title} onChange={this.handleChangeInput} placeholder="Tytuł projektu" />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="descriptiom">Opis</label>
                                 <div className="form-field">
-                                    <textarea name="description" id="description" cols="30" rows="10" value={project.description} onChange={this.handleChangeInput} placeholder="Opis projektu"></textarea>
+                                    <textarea name="description" id="description" cols="30" rows="10" value={description} onChange={this.handleChangeInput} placeholder="Opis projektu"></textarea>
                                 </div>
                             </div>
                         </form>
@@ -134,7 +158,7 @@ class AdminEditProject extends Component {
                             <div className="form-group">
                                 <label htmlFor="imgTitle">Opis</label>
                                 <div className="form-field">
-                                    <input type="text" id="imgAlt" name="imgAlt" value={this.state.imgAlt} onChange={this.handleChange} placeholder="Opis zdjęcia" />
+                                    <input type="text" id="imgAlt" name="imgAlt" value={imgAlt} onChange={this.handleChange} placeholder="Opis zdjęcia" />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -143,12 +167,16 @@ class AdminEditProject extends Component {
                                     <input type="file" name="image" id="image" accept="image/*" ref={this.fileInput} />
                                 </div>
                             </div>
+                            {checkbocDisplay.length > 0 ? '' : <div className="form-group form-group--checkbox">
+                                <label htmlFor="headerImage" className="checkbox-label">Czy zdjęcie główne?</label>
+                                <input type="checkbox" value={headerImage} onChange={this.handleChange} name="headerImage" id="headerImage" />
+                            </div>}
                             <div className="form-group form-group--column">
                                 <button className="form__btn" type="sumbit">Dodaj zdjęcie</button>
-                                <progress value={this.state.progress} max="100" />
+                                <progress value={progress} max="100" />
                             </div>
                         </form>
-                        <div className="form__gallery" style={this.state.project.gallery.length > 0 ? bgWhite : transparent}>
+                        <div className="form__gallery" style={gallery.length > 0 ? bgWhite : transparent}>
                             {imgGallery}
                         </div>
                         <button className="form__btn form__btn--big" onClick={this.handleUpdate}>Uaktualnij projekt</button>

@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "eslint-cli": "^1.1.1",
     "firebase": "^5.8.3",
+    "node-sass": "^4.11.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-reveal": "^1.2.2",
