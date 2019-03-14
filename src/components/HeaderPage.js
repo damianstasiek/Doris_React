@@ -24,19 +24,26 @@ class HeaderPage extends Component {
 
     }
     toggleMenu = (e) => {
-        console.log(e.target.parentElement.classList)
+        console.log(e.target.className)
         const mainNav = document.querySelector('.main-nav');
         const navItem = document.querySelectorAll('.nav__item')
+        const navSocial = document.querySelector('.nav__social')
+        const iconBurger = document.querySelector('.fa-bars')
+        const iconX = document.querySelector('.fa-times')
         if (this.out) {
             navItem.forEach(item => item.classList.remove('active'))
+            navSocial.classList.remove('active');
             setTimeout(() => { mainNav.classList.remove('active') }, 500)
             this.out = false;
         } else {
             mainNav.classList.add('active');
-            setTimeout(() => { navItem.forEach(item => item.classList.add('active')) }, 1000)
+            setTimeout(() => { navSocial.classList.add('active') }, 1000);
+            setTimeout(() => { navItem.forEach(item => item.classList.add('active')) }, 1000);
+
             this.out = true
         }
-        console.log('działa')
+        iconBurger.classList.toggle('show');
+        iconX.classList.toggle('show');
     }
 
     render() {
@@ -61,13 +68,21 @@ class HeaderPage extends Component {
             <header className={this.props.class} style={projectId ? bgImage : none}>
 
                 <nav className="navbar">
-                    <div className="nav-toggle" onClick={this.toggleMenu}>
+                    <div className="nav-toggle">
                         <NavLink className="nav__link" to="/"><img src={logo} alt="Doris projektowanie wnęrtrz" /></NavLink>
-                        <i className="fas fa-bars"></i>
-
+                        <i className="nav-icon fas fa-bars show" onClick={this.toggleMenu}></i>
+                        <i className="nav-icon fas fa-times" onClick={this.toggleMenu}></i>
                     </div>
                     <ul className="main-nav">
                         {menu}
+                        <div className="nav__social">
+                            <a className="nav__social__links" href="https://www.facebook.com/dorisdesignservices/">
+                                <i className="fab fa-facebook-square"></i>
+                            </a>
+                            <a className="nav__social__links" href="https://www.instagram.com/dorisdesignservices/">
+                                <i className="fab fa-instagram"></i>
+                            </a>
+                        </div>
                     </ul>
                 </nav>
 

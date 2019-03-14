@@ -1,0 +1,63 @@
+ .carousel {
+	padding-top: 40px;
+	position: relative;
+	height: 90%;
+	margin: 0;
+    width: 100vw;
+    // z-index: 1;
+}
+
+.image-slide {
+	position: absolute;
+	height: 80%;
+	width: 100%;
+	overflow: hidden;
+	transition: 2s ease;
+	&.active {
+		height: 0%;
+	}
+	
+}
+.image-title {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,  -50%);
+	color: #fff;
+	font-size: 38px;
+	font-weight: 800;
+	text-align: center;
+}
+
+.image-dot__container {
+	position: absolute;
+	display: flex;
+	bottom: 20px;
+	right: 20px;
+	margin: 15px 0;
+}
+.image-dot {
+	display: block;
+	font-size: 14px;
+	color: #fff;
+	padding: 0 12px;
+	&.active {
+		color: red;
+	}
+}
+.slide-arrow {
+	display: none;
+	color: #14B6D4;
+	cursor: pointer;
+	font-size: 2rem;
+	position: fixed;
+	top: 50%;
+}
+
+.slide-arrow.right {
+	right: 1rem;
+}
+
+.slide-arrow.left {
+	left: 1rem;
+}

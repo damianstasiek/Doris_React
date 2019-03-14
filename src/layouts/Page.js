@@ -9,6 +9,7 @@ import ErrorPage from '../pages/ErrorPage'
 import Project from '../components/Project'
 import AdminPage from '../layouts/AdminPage';
 import * as firebase from 'firebase'
+import { throws } from 'assert';
 
 class Page extends Component {
     state = {
@@ -35,7 +36,7 @@ class Page extends Component {
         return (
             <>
                 <Switch>
-                    <Route path="/" exact component={HomePage} />
+                    <Route path="/" exact render={props => <HomePage {...props} projects={this.state.projects} />} />
                     <Route path="/about" component={About} />
                     <Route path="/projects" render={props => <ProjectsList {...props} data={this.state} />} />
                     <Route path="/project/:id" exact render={props => <Project {...props} data={this.state} />} />
