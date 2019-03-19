@@ -21,7 +21,19 @@ class HeaderPage extends Component {
                     this.setState({ image })
                 })
         }
+        window.addEventListener('scroll', this.handleScroll)
 
+    }
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll)
+    }
+    handleScroll(e) {
+        const scrollValue = window.scrollY;
+        const header = document.querySelector('header')
+        header.classList.add('active')
+        if (scrollValue == 0) {
+            header.classList.remove('active')
+        }
     }
     toggleMenu = (e) => {
         console.log(e.target.className)
@@ -32,16 +44,19 @@ class HeaderPage extends Component {
         const iconX = document.querySelector('.fa-times')
         if (this.out) {
             navItem.forEach(item => item.classList.remove('active'))
+            document.body.classList.add('menu-open')
             navSocial.classList.remove('active');
             setTimeout(() => { mainNav.classList.remove('active') }, 500)
             this.out = false;
         } else {
+            document.body.classList.remove('menu-open')
             mainNav.classList.add('active');
             setTimeout(() => { navSocial.classList.add('active') }, 1000);
             setTimeout(() => { navItem.forEach(item => item.classList.add('active')) }, 1000);
 
             this.out = true
         }
+        document.body.classList.toggle('menu-open')
         iconBurger.classList.toggle('show');
         iconX.classList.toggle('show');
     }

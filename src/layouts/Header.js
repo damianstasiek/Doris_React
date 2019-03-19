@@ -30,8 +30,8 @@ const Header = (props) => {
         <>
             <Route path="/" exact render={props => <HeaderPage {...props} menu={list} class="header" />} />
             <Route path="/contact" render={props => <HeaderPage {...props} menu={list} class="header" />} />
-            <Route path="/projects" render={props => <HeaderPage {...props} menu={list} class="header" />} />
-            <Route path="/about" render={props => <HeaderPage {...props} menu={list} class="header" />} />
+            <Route path="/projects" render={props => <HeaderPage {...props} menu={list} class="header--white" />} />
+            <Route path="/about" render={props => <HeaderPage {...props} menu={list} class="header--white" />} />
             <Route path="/project/:id" render={props => <HeaderPage {...props} menu={list} class="header__projects" />} />
 
 

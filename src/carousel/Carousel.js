@@ -28,9 +28,20 @@ class Carousel extends Component {
             clearTimeout(this.timerId);
         }
     }
+    componentDidUpdate() {
+        // const dots = [...document.querySelectorAll('.image-dot')]
+        // console.log(dots[this.state.currentImageIndex].id)
+        // if (dots.length > 0) {
+        //     if (!dots[0].classList.contains('active')) {
+        //         dots[0].classList.add('active')
+        //     }
+        // }
+        console.log('update')
+    }
     componentWillReceiveProps() {
+        console.log('props')
         const dots = [...document.querySelectorAll('.image-dot')]
-
+        console.log(dots.length)
         if (dots.length > 0) {
             dots[0].classList.add('active')
         }
@@ -102,7 +113,7 @@ class Carousel extends Component {
             image = project.gallery.filter(item => item.headerImage === true).map(item => item.image)
         }
         const dots = this.props.projects.map((item, index) => (
-            <div key={index} id={index} className={`image-dot`} onClick={(e) => this.handleDot(index, e)}><i className="fas fa-circle"></i></div>
+            <div key={index} id={index} className={`image-dot`} onClick={(e) => this.handleDot(index, e)}><i className="fas active fa-circle"></i></div>
         ))
         if (this.props.projects.length > 0) {
             return (

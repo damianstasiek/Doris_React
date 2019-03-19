@@ -11,12 +11,12 @@ class App extends Component {
     return (
       <Router>
         <>
-          {/* <div className="app-wrapper"> */}
-          {<Header />}
-          {/* <section className="section-wrapper"> */}
-          {<Page />}
-          {/* </section> */}
-          {/* </div> */}
+          <div className="app-wrapper">
+            {<Header />}
+            {/* <section className="section-wrapper"> */}
+            {<Page />}
+            {/* </section> */}
+          </div>
         </>
       </Router>
     );

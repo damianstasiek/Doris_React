@@ -19,22 +19,8 @@ class HomePage extends Component {
             })
             this.setState({ projects })
         })
-        // this.projectsCarusel();
+
     }
-
-    // projectsCarusel = () => {
-    //     const { projects } = this.state;
-    //     let project = { ...projects[this.i] }
-    //     console.log(project.title)
-    //     document.querySelector('.title').textContent = project.title;
-
-    //     if (this.i < projects.length - 1) {
-    //         this.i++;
-    //     } else {
-    //         this.i = 0;
-    //     }
-    //     setTimeout(this.projectsCarusel, 3000)
-    // }
     render() {
         console.log(this.state)
         return (

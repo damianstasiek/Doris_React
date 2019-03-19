@@ -23,7 +23,7 @@ const AdminProject = (props) => {
     )
     return (
         <>
-            <div className="project__list">
+            <div className="admin__project__list">
                 {projectItem}
             </div>
         </>

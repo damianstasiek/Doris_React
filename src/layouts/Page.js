@@ -9,7 +9,6 @@ import ErrorPage from '../pages/ErrorPage'
 import Project from '../components/Project'
 import AdminPage from '../layouts/AdminPage';
 import * as firebase from 'firebase'
-import { throws } from 'assert';
 
 class Page extends Component {
     state = {
