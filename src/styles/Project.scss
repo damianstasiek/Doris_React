@@ -1,11 +1,18 @@
 .project__container {
     position: relative;
+    top: 0;
+    left: 0;
 }
 
 .project {
     width: 100%;
     padding: 20px 40px;
 }
+// .project__item {
+//     width: 100%;
+//     padding: 20px 40px;
+// }
+
 
 .project__title {
     font-size: 30px;

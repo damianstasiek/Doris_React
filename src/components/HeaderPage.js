@@ -44,16 +44,13 @@ class HeaderPage extends Component {
         const iconX = document.querySelector('.fa-times')
         if (this.out) {
             navItem.forEach(item => item.classList.remove('active'))
-            document.body.classList.add('menu-open')
             navSocial.classList.remove('active');
             setTimeout(() => { mainNav.classList.remove('active') }, 500)
             this.out = false;
         } else {
-            document.body.classList.remove('menu-open')
             mainNav.classList.add('active');
             setTimeout(() => { navSocial.classList.add('active') }, 1000);
             setTimeout(() => { navItem.forEach(item => item.classList.add('active')) }, 1000);
-
             this.out = true
         }
         document.body.classList.toggle('menu-open')
@@ -62,6 +59,7 @@ class HeaderPage extends Component {
     }
 
     render() {
+        document.body.classList.remove('menu-open')
         const { image } = this.state
         const bgImage = {
             background: `url(${image}) no-repeat center center fixed`,
@@ -108,26 +106,3 @@ class HeaderPage extends Component {
 }
 
 export default HeaderPage;
-
-// const HeaderPage = (props) => {
-//     console.log(props)
-//     console.log(props.menu)
-//     console.log(props.match.params.id)
-//     const menu = props.menu.map(item => (
-//         <li key={item.name} className="site-nav__item">
-//             <NavLink className="site-nav__link" to={item.path}>{item.name}</NavLink>
-//         </li>
-//     ))
-//     return (
-//         <div className={props.class}>
-//             <nav className="site-nav">
-//                 <NavLink className="site-nav__link" to="/"><img className="site-nav__img" src={logo} alt="Doris projektowanie wnęrtrz" /></NavLink>
-//                 <ul className="site-nav__list">
-//                     {menu}
-//                 </ul>
-//             </nav>
-//         </div>
-//     );
-// }
-
-// export default HeaderPage;

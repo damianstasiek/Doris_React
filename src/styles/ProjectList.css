@@ -13,10 +13,15 @@
     line-height: 1.4;
     font-size: 18px;
 }
-.project a {
+
+.project__item {
+    width: 100%;
+    margin-bottom: 50px;
+}
+.project__item img {
+    width: 100%;
+}
+.project__item a {
     text-decoration: none;
     color: #000
-}
-.project img {
-    width: 100%;
 }

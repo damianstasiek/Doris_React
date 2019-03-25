@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import HomePage from '../pages/HomePage'
 import About from './About';
@@ -34,15 +35,19 @@ class Page extends Component {
         console.log(this.state.projects)
         return (
             <>
+                {/* <TransitionGroup>
+                    <CSSTransition key={this.location.location.key} styles="fade" timeout={300}> */}
                 <Switch>
                     <Route path="/" exact render={props => <HomePage {...props} projects={this.state.projects} />} />
-                    <Route path="/about" component={About} />
+                    <Route exact path="/about" component={About} />
                     <Route path="/projects" render={props => <ProjectsList {...props} data={this.state} />} />
                     <Route path="/project/:id" exact render={props => <Project {...props} data={this.state} />} />
                     <Route path="/contact" component={Contact} />
                     <Route path="/admin" component={AdminPage} />
                     <Route component={ErrorPage} />
                 </Switch>
+                {/* </CSSTransition>
+                </TransitionGroup> */}
             </>
         );
     }

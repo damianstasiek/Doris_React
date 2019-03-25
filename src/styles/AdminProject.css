@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.project__item {
+.admin__project__item {
     width: 45%;
     text-align: center;
     padding: 18px;

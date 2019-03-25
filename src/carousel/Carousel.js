@@ -29,23 +29,25 @@ class Carousel extends Component {
         }
     }
     componentDidUpdate() {
-        // const dots = [...document.querySelectorAll('.image-dot')]
-        // console.log(dots[this.state.currentImageIndex].id)
-        // if (dots.length > 0) {
-        //     if (!dots[0].classList.contains('active')) {
-        //         dots[0].classList.add('active')
-        //     }
-        // }
+        if (this.state.dots.length == 0) {
+            const dots = [...document.querySelectorAll('.image-dot')]
+            dots[0].classList.add('active')
+            this.setState({ dots })
+        }
         console.log('update')
     }
     componentWillReceiveProps() {
         console.log('props')
-        const dots = [...document.querySelectorAll('.image-dot')]
+        this.initialDot();
+
+    }
+    initialDot = () => {
+        const { dots } = this.state;
+        this.setState({ dots })
         console.log(dots.length)
         if (dots.length > 0) {
             dots[0].classList.add('active')
         }
-
     }
     setupAutoplay = () => {
         this.timerId = setInterval(this.nextSlide, 5000)
@@ -69,7 +71,7 @@ class Carousel extends Component {
     }
     nextSlide() {
         console.log('right')
-        const dots = [...document.querySelectorAll('.image-dot')]
+        const { dots } = this.state;
         dots[this.state.currentImageIndex].classList.add('active')
         const lastIndex = this.props.projects.length - 1;
         const { currentImageIndex } = this.state;
@@ -96,7 +98,7 @@ class Carousel extends Component {
         this.setupAutoplay();
     }
     handleDot(id, e) {
-        const dots = [...document.querySelectorAll('.image-dot')]
+        const { dots } = this.state;
         dots[this.state.currentImageIndex].classList.remove('active')
         dots[id].classList.add('active')
         this.stopAutoplay();
@@ -107,6 +109,7 @@ class Carousel extends Component {
     }
 
     render() {
+        console.log(this.state.dots)
         const project = { ...this.props.projects[this.state.currentImageIndex] };
         let image = ''
         if (project.gallery) {

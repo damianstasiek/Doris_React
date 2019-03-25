@@ -6,7 +6,7 @@ import '../styles/ProjectList.css'
 const ProjectList = (props) => {
     console.log(props.data)
     const projectsList = props.data.projects.map(project => (
-        <div className="project" key={project.id}>
+        <div className="project__item" key={project.id}>
             <Link to={`/project/${project.id}`} >
                 <img src={project.gallery[0].image} alt={project.title} />
                 <p className="projects__title">{project.title}</p>
