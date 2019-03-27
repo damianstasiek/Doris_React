@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 class Projects extends Component {
     state = {}
     componentDidMount() {
+        console.log('Did Mount -------------------------')
+        console.log(this.props)
         window.addEventListener('scroll', this.handleScroll)
     }
 
@@ -31,6 +33,7 @@ class Projects extends Component {
         })
     }
     render() {
+        console.log(this.props)
         const ids = this.props.data.projects.map(item => item.id)
         console.log(this.props.data.projects)
         console.log(this.i++)

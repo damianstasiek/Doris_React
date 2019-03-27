@@ -1,10 +1,41 @@
 .app-wrapper {
-  position: "absolute";
+  position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  height: 100vh;
+}
+.content {
+  position: relative;
+  height: 100%;
+}
+
+/* appear - on page load */
+.fade-appear {
+  opacity: 0;
+  z-index: 1;
+}
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 800ms linear;
+}
+
+/* enter */
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms linear 250ms;
+}
+/* exit */
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit.fade-exit-active {
+  opacity: 0;
+  transition: opacity 250ms linear;
 }
 
 .header {
@@ -133,7 +164,7 @@
 
 .homePage { 
   background-color: #3B3A38;
-  height: 85%;
+  height: 100%;
 }
 .about {
   height: 300vh;

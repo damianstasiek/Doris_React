@@ -32,23 +32,31 @@ class Page extends Component {
     }
 
     render() {
+        console.log(this.props.location)
         console.log(this.state.projects)
         return (
-            <>
-                {/* <TransitionGroup>
-                    <CSSTransition key={this.location.location.key} styles="fade" timeout={300}> */}
-                <Switch>
-                    <Route path="/" exact render={props => <HomePage {...props} projects={this.state.projects} />} />
-                    <Route exact path="/about" component={About} />
-                    <Route path="/projects" render={props => <ProjectsList {...props} data={this.state} />} />
-                    <Route path="/project/:id" exact render={props => <Project {...props} data={this.state} />} />
-                    <Route path="/contact" component={Contact} />
-                    <Route path="/admin" component={AdminPage} />
-                    <Route component={ErrorPage} />
-                </Switch>
-                {/* </CSSTransition>
-                </TransitionGroup> */}
-            </>
+            <Route
+                render={({ location }) => (
+                    <TransitionGroup className="content" >
+                        <CSSTransition
+                            key={location.key}
+                            timeout={500}
+                            classNames="fade"
+                        >
+                            <Switch location={location}>
+                                <Route path="/" exact render={props => <HomePage {...props} projects={this.state.projects} />} />
+                                <Route exact path="/about" component={About} />
+                                <Route exact path="/projects" render={props => <ProjectsList {...props} data={this.state} />} />
+                                <Route path="/project/:id" exact render={props => <Project {...props} data={this.state} />} />
+                                <Route exact path="/contact" component={Contact} />
+                                <Route exact path="/admin" component={AdminPage} />
+                                <Route component={ErrorPage} />
+                            </Switch>
+                        </CSSTransition>
+                    </ TransitionGroup>
+                )}
+            />
+
         );
     }
 }

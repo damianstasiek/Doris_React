@@ -12,10 +12,9 @@ class App extends Component {
       <Router>
         <div className="app-wrapper">
           {<Header />}
-          {/* <section className="section-wrapper"> */}
           {<Page />}
-          {/* </section> */}
         </div>
+
       </Router>
     );
   }

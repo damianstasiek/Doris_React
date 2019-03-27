@@ -12,13 +12,14 @@ class Carousel extends Component {
             project: [],
             image: '',
             class: '',
-            dots: ''
+            dots: [...document.querySelectorAll('.image-dot')]
         };
 
         this.nextSlide = this.nextSlide.bind(this);
         this.previousSlide = this.previousSlide.bind(this);
     }
     componentDidMount() {
+        this.initialDot();
         this.setupAutoplay();
     }
 
@@ -29,11 +30,7 @@ class Carousel extends Component {
         }
     }
     componentDidUpdate() {
-        if (this.state.dots.length == 0) {
-            const dots = [...document.querySelectorAll('.image-dot')]
-            dots[0].classList.add('active')
-            this.setState({ dots })
-        }
+
         console.log('update')
     }
     componentWillReceiveProps() {
@@ -42,9 +39,8 @@ class Carousel extends Component {
 
     }
     initialDot = () => {
-        const { dots } = this.state;
+        const dots = [...document.querySelectorAll('.image-dot')]
         this.setState({ dots })
-        console.log(dots.length)
         if (dots.length > 0) {
             dots[0].classList.add('active')
         }
