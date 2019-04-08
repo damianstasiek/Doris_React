@@ -28,11 +28,11 @@ const Header = (props) => {
     console.log(props)
     return (
         <>
-            <Route path="/" exact render={props => <HeaderPage {...props} menu={list} class="header" />} />
-            <Route path="/contact" render={props => <HeaderPage {...props} menu={list} class="header--white" />} />
-            <Route path="/projects" render={props => <HeaderPage {...props} menu={list} class="header--white" />} />
-            <Route path="/about" render={props => <HeaderPage {...props} menu={list} class="header--white" />} />
-            <Route path="/project/:id" render={props => <HeaderPage {...props} menu={list} class="header__projects" />} />
+            <Route path="/" exact render={props => <HeaderPage {...props} menu={list} class="" />} />
+            <Route exact path="/contact" render={props => <HeaderPage {...props} menu={list} class="--white" />} />
+            <Route exact path="/projects" render={props => <HeaderPage {...props} menu={list} class="--white" />} />
+            <Route path="/about" render={props => <HeaderPage {...props} menu={list} class="--white" />} />
+            <Route path="/projects/:id" render={props => <HeaderPage {...props} menu={list} class="__projects" />} />
 
         </>
     );

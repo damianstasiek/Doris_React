@@ -47,9 +47,9 @@ class Page extends Component {
                                 <Route path="/" exact render={props => <HomePage {...props} projects={this.state.projects} />} />
                                 <Route exact path="/about" component={About} />
                                 <Route exact path="/projects" render={props => <ProjectsList {...props} data={this.state} />} />
-                                <Route path="/project/:id" exact render={props => <Project {...props} data={this.state} />} />
+                                <Route path="/projects/:id" exact render={props => <Project {...props} data={this.state} />} />
                                 <Route exact path="/contact" component={Contact} />
-                                <Route exact path="/admin" component={AdminPage} />
+                                <Route path="/admin" component={AdminPage} />
                                 <Route component={ErrorPage} />
                             </Switch>
                         </CSSTransition>

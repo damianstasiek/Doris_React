@@ -11,10 +11,10 @@ class Carousel extends Component {
             currentImageIndex: 0,
             project: [],
             image: '',
-            class: '',
+            animating: false,
             dots: [...document.querySelectorAll('.image-dot')]
         };
-
+        this.slideCount = React.Children.count(this.props.children)
         this.nextSlide = this.nextSlide.bind(this);
         this.previousSlide = this.previousSlide.bind(this);
     }
@@ -30,10 +30,12 @@ class Carousel extends Component {
         }
     }
     componentDidUpdate() {
-
         console.log('update')
     }
     componentWillReceiveProps() {
+        this.slideCount = React.Children.count(this.props.children)
+        console.log(this.props.children)
+        console.log(this.slideCount)
         console.log('props')
         this.initialDot();
 
@@ -46,7 +48,7 @@ class Carousel extends Component {
         }
     }
     setupAutoplay = () => {
-        this.timerId = setInterval(this.nextSlide, 5000)
+        this.timerId = setInterval(this.nextSlide, 3000)
     }
     stopAutoplay = () => {
         if (this.timerId) {
@@ -63,38 +65,62 @@ class Carousel extends Component {
 
         this.setState({
             currentImageIndex: index,
+            class: !this.state.class
         });
     }
     nextSlide() {
         console.log('right')
         const { dots } = this.state;
-        dots[this.state.currentImageIndex].classList.add('active')
         const lastIndex = this.props.projects.length - 1;
         const { currentImageIndex } = this.state;
+        dots[currentImageIndex].classList.add('active')
         const shouldRestIndex = currentImageIndex === lastIndex;
         const index = shouldRestIndex ? 0 : currentImageIndex + 1;
+
         this.setState({
             currentImageIndex: index,
+            animation: true
         });
-        this.changeDot(dots);
+        console.log(this.state.currentImageIndex)
+        // this.animationTimerId = setTimeout(this.onAnimationEnd, 5000)
+        this.changeDot(dots, index);
+
     }
-    changeDot = (dots) => {
+    onAnimationEnd = () => {
+        this.setState({
+            animating: false
+        })
+        this.setupAutoplay();
+    }
+    animationStart = () => {
+        const num = document.getElementById('number')
+        if (this.state.animation) {
+            num.classList.add('active')
+        } else {
+            num.classList.remove('active')
+        }
+
+    }
+    changeDot = (dots, id) => {
         const activeDot = dots.findIndex(dot => dot.classList.contains('active'));
+        console.log(activeDot)
         dots[activeDot].classList.remove('active')
         dots[this.state.currentImageIndex].classList.add('active')
     }
-    handleMouseOver = () => {
-        console.log('mouseOver')
-        this.isMouseOver = true;
-        this.stopAutoplay();
-    }
-    handleMouseOut = () => {
-        console.log('mouseOut')
-        this.isMouseOver = false;
-        this.setupAutoplay();
-    }
+    // handleMouseOver = () => {
+    //     console.log('mouseOver')
+    //     this.isMouseOver = true;
+    //     this.stopAutoplay();
+    // }
+    // handleMouseOut = () => {
+    //     console.log('mouseOut')
+    //     this.isMouseOver = false;
+    //     this.setupAutoplay();
+    // }
     handleDot(id, e) {
         const { dots } = this.state;
+        const num = document.getElementById('number')
+        num.textContent = this.state.currentImageIndex;
         dots[this.state.currentImageIndex].classList.remove('active')
         dots[id].classList.add('active')
         this.stopAutoplay();
@@ -105,7 +131,7 @@ class Carousel extends Component {
     }
 
     render() {
-        console.log(this.state.dots)
+        const { currentImageIndex, animation } = this.state;
         const project = { ...this.props.projects[this.state.currentImageIndex] };
         let image = ''
         if (project.gallery) {
@@ -117,14 +143,24 @@ class Carousel extends Component {
         if (this.props.projects.length > 0) {
             return (
                 <div className="carousel"
-                // onMouseOver={this.handleMouseOver}
-                // onMouseOut={this.handleMouseOut}
+                    onMouseOver={this.handleMouseOver}
+                    onMouseOut={this.handleMouseOut}
                 >
                     <Arrow
                         direction="left"
                         clickFunction={this.previousSlide}
                         glyph="<" />
-                    <ImageSlide url={image} title={project.title} id={project.id} animation={this.state.class} />
+                    <div className="counter">
+                        <div className="counter__current">
+                            <span>0</span>
+                            <span id="number">{currentImageIndex + 1}</span>
+                        </div>
+                        <div className="counter__total">
+                            <span>0</span>
+                            <span>{this.props.projects.length}</span>
+                        </div>
+                    </div>
+                    <ImageSlide url={image} title={project.title} id={project.id} animation={animation} />
                     <Arrow
                         direction="right"
                         clickFunction={this.nextSlide}
@@ -133,7 +169,7 @@ class Carousel extends Component {
                         {dots}
                     </div>
 
-                </div>
+                </div >
             );
         } else {
             return (

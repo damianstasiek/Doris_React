@@ -11,7 +11,8 @@ class HeaderPage extends Component {
     refProjects = firebase.firestore().collection('projects')
     out = false;
     componentDidMount() {
-        if (this.props.class === 'header__projects') {
+        console.log('Mount......................................................')
+        if (this.props.class === '__projects') {
             const id = this.props.match.params.id
             console.log(id)
             this.refProjects.doc(id).get()
@@ -23,6 +24,9 @@ class HeaderPage extends Component {
         }
         window.addEventListener('scroll', this.handleScroll)
 
+    }
+    componentWillReceiveProps(props) {
+        console.log('get props _____________________________________________')
     }
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll)
@@ -78,7 +82,7 @@ class HeaderPage extends Component {
             </li>
         ))
         return (
-            <header className={this.props.class} style={projectId ? bgImage : none}>
+            <header className={`header${this.props.class}`} style={projectId ? bgImage : none}>
 
                 <nav className="navbar">
                     <div className="nav-toggle">

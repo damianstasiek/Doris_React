@@ -2,13 +2,32 @@ import React, { Component } from 'react';
 // import Slide from 'react-reveal/Slide';
 import '../styles/Project.scss';
 import { Link } from 'react-router-dom'
-
+import * as firebase from 'firebase'
 
 class Projects extends Component {
-    state = {}
+    state = {
+        projects: [],
+        id: ''
+    }
     componentDidMount() {
-        console.log('Did Mount -------------------------')
-        console.log(this.props)
+        if (!this.state.id) {
+            const id = this.props.match.params.id;
+            this.setState({ id })
+            console.log('-----------------------------------------------')
+        }
+        const projects = [];
+        const firestore = firebase.firestore();
+        const rootRef = firestore.collection('projects')
+        rootRef.get().then((snapshot) => {
+            snapshot.docs.forEach(doc => {
+                const item = doc.data()
+                item.id = doc.id
+                projects.push(item)
+            });
+            this.setState({
+                projects
+            })
+        })
         window.addEventListener('scroll', this.handleScroll)
     }
 
@@ -32,15 +51,13 @@ class Projects extends Component {
             }
         })
     }
+
     render() {
+        const { projects, id } = this.state;
+
+        // const id = this.props.match.params.id;
         console.log(this.props)
-        const ids = this.props.data.projects.map(item => item.id)
-        console.log(this.props.data.projects)
-        console.log(this.i++)
-        console.log(this.state.ids)
-        const id = this.props.match.params.id;
-        console.log(this.props)
-        let project = this.props.data.projects.filter(item => id === item.id).map(item => (
+        let project = projects.filter(item => id === item.id).map(item => (
             <div className="project" key={item.id}>
                 <h2 className="project__title">{item.title}</h2>
                 <p className="project__description">{item.description}</p>
@@ -56,7 +73,9 @@ class Projects extends Component {
         return (
             <div className="project__container">
                 {project}
-                <div className="project__footer">Następny projekt</div>
+                <Link to={`/projects`}>
+                    <div className="project__btn--back">Powrót</div>
+                </Link>
             </div >
         );
     }

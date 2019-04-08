@@ -8,8 +8,8 @@ const ImageSlide = ({ url, title, id, animation }) => {
         backgroundPosition: 'center'
     }
     return (
-        <Link to={`/project/${id}`}>
-            <div className={`image-slide ${animation}`} style={styles}>
+        <Link to={`/projects/${id}`}>
+            <div className={`image-slide ${animation ? 'active' : ''}`} style={styles}>
                 <div className="image-title">
                     {title}
                 </div>

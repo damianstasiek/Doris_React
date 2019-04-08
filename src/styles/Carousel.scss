@@ -1,4 +1,4 @@
- .carousel {
+.carousel {
 	padding-top: 40px;
 	position: relative;
 	height: 90%;
@@ -12,19 +12,21 @@
 	height: 80%;
 	width: 100%;
 	overflow: hidden;
-	&.active {
-		height: 0%;
-	}
-	
+	transition: 1s;
+}
+
+.counter {
+	display: none;
 }
 .image-title {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,  -50%);
+	font-family: 'Spectral', serif;
 	color: #fff;
-	font-size: 38px;
-	font-weight: 800;
+	font-size: 42px;
+	font-weight: 600;
 	text-align: center;
 }
 
@@ -45,17 +47,86 @@
 }
 .slide-arrow {
 	display: none;
-	color: #14B6D4;
-	cursor: pointer;
-	font-size: 2rem;
-	position: fixed;
-	top: 50%;
+
 }
 
-.slide-arrow.right {
-	right: 1rem;
-}
+@media (min-width: 768px){ 
+	.carousel {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		height: 100%;
+		margin: 0;
+		width: 50%;
+		// z-index: 1;
+	}
+	.image-dot__container {
+		right: -500px;
+	}
+	.counter {
+		display: flex;
+		flex-direction: column;
+		position: absolute;
+		top: 30%;
+		left: 180px;
+		color: #fff;
+		font-size: 72px;
+		font-family: 'Spectral', serif;
+		font-weight: 600;
+		display: flex;
+		&__total {
+			opacity: .5;
+		}
+	}
+	.image-slide {
+		overflow:visible;
+	}
+	.image-title {
+		position: absolute;
+		left: 70%;
+		width: 400px;
+		transform: translateY(-50%);
+		font-family: 'Spectral', serif;
+		color: #fff;
+		font-size: 42px;
+		font-weight: 600;
+		text-align: center;
+	}
+	.slide-arrow {
+		display: block;
+		color: #14B6D4;
+		cursor: pointer;
+		font-size: 2rem;
+		position: fixed;
+		top: 50%;
+	}
+	
+	.slide-arrow.right {
+		right: 1rem;
+	}
+	
+	.slide-arrow.left {
+		left: 1rem;
+	}
 
-.slide-arrow.left {
-	left: 1rem;
+	#number {
+		display: inline-block;
+		opacity: 1;
+		&.active {
+			animation: slide 1s;
+		}
+	}
+	@keyframes slide {
+		0% {
+			transform: scale(1)
+		}
+		50% {
+			transform: scale(2)
+		}
+		100% {
+			transform: scale(1)
+		}
+	}
+
 }
