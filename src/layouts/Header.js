@@ -5,19 +5,23 @@ import HeaderPage from '../components/HeaderPage';
 const list = [
     {
         name: 'O nas',
-        path: '/about'
+        path: '/about',
+        class: 'first',
     },
     {
         name: 'Projekty',
-        path: '/projects'
+        path: '/projects',
+        class: '',
     },
     {
         name: 'Kontakt',
-        path: '/contact'
+        path: '/contact',
+        class: '',
     },
     {
         name: 'Admin',
-        path: '/admin'
+        path: '/admin',
+        class: 'last'
     }
 ]
 

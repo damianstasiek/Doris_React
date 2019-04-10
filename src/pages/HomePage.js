@@ -25,9 +25,7 @@ class HomePage extends Component {
         console.log(this.props)
         console.log(this.state)
         return (
-            <section className="homePage">
-                <Carousel projects={this.state.projects} />
-            </section>
+            <Carousel projects={this.state.projects} />
         );
     }
 }

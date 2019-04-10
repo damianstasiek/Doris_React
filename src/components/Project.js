@@ -36,20 +36,24 @@ class Projects extends Component {
     }
 
     handleScroll(e) {
-        // console.log(e)
+        console.log(window.innerHeight)
+        console.log(window.scrollY)
         const scrollValue = window.scrollY;
         const windowHeight = window.innerHeight;
         const images = [...document.querySelectorAll('.project__gallery__item')];
         images.forEach(img => {
             const imageFromTop = img.offsetTop;
             const imageHeight = img.offsetHeight;
-            if (scrollValue > imageFromTop + imageHeight - windowHeight + 600) {
+            if (scrollValue > imageFromTop + imageHeight - windowHeight + 400) {
                 img.classList.add('active')
             }
             if (scrollValue < 100) {
                 img.classList.remove('active')
             }
         })
+        if (window.innerHeight < window.scrollY) {
+            console.log('już')
+        }
     }
 
     render() {

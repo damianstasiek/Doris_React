@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import Page from './Page.js'
 import '../styles/App.scss';
 import Header from '../layouts/Header'
+import Footer from './Footer.js';
 
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
         <div className="app-wrapper">
           {<Header />}
           {<Page />}
+          {<Footer />}
         </div>
 
       </Router>

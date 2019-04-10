@@ -23,6 +23,15 @@ class HeaderPage extends Component {
                 })
         }
         window.addEventListener('scroll', this.handleScroll)
+        document.querySelector('.nav__links')
+        if (this.props.location.pathname === '/') {
+            document.body.style = "background-color: #1E1E1E;"
+        } else {
+            document.body.style = "background-color: #fff;"
+            document.querySelectorAll('.nav__links').forEach(link => {
+                link.style = "color: black"
+            })
+        }
 
     }
     componentWillReceiveProps(props) {
@@ -31,14 +40,14 @@ class HeaderPage extends Component {
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll)
     }
-    handleScroll(e) {
-        const scrollValue = window.scrollY;
-        const header = document.querySelector('header')
-        header.classList.add('active')
-        if (scrollValue == 0) {
-            header.classList.remove('active')
-        }
-    }
+    // handleScroll(e) {
+    //     const scrollValue = window.scrollY;
+    //     const header = document.querySelector('header')
+    //     header.classList.add('active')
+    //     if (scrollValue == 0) {
+    //         header.classList.remove('active')
+    //     }
+    // }
     toggleMenu = (e) => {
         console.log(e.target.className)
         const mainNav = document.querySelector('.main-nav');
@@ -65,24 +74,27 @@ class HeaderPage extends Component {
     render() {
         document.body.classList.remove('menu-open')
         const { image } = this.state
+        console.log(image);
         const bgImage = {
-            background: `url(${image}) no-repeat center center fixed`,
-            backgroundSize: 'cover',
+            backgroundImage: `url(${image})`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed',
+            backgroundSize: 'cover'
         }
         const none = {}
-        const projectId = this.props.match.params.id
         console.log(this.state)
         console.log(this.state.image)
         console.log(this.props)
         console.log(this.props.menu)
         console.log(this.props.match.params.id)
         const menu = this.props.menu.map(item => (
-            <li key={item.name} className="nav__item">
+            <li key={item.name} className={`nav__item ${item.class}`}>
                 <NavLink className="nav__links" to={item.path}>{item.name}</NavLink>
             </li>
         ))
         return (
-            <header className={`header${this.props.class}`} style={projectId ? bgImage : none}>
+            <header className={`header${this.props.class}`} style={image ? bgImage : none}>
 
                 <nav className="navbar">
                     <div className="nav-toggle">
@@ -102,9 +114,7 @@ class HeaderPage extends Component {
                         </div>
                     </ul>
                 </nav>
-
             </header>
-
         );
     }
 }
